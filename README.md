@@ -1,6 +1,6 @@
 # AI Cloud Cost Detective
 
-An AI-powered tool that investigates Azure cloud costs automatically. It scans resources in an Azure Resource Group, detects cost issues like over-provisioning and misconfigurations, and provides actionable suggestions with fixes.
+An AI-powered tool that investigates AWS cloud costs automatically. It scans resources in an Azure Resource Group, detects cost issues like over-provisioning and misconfigurations, and provides actionable suggestions with fixes.
 
 ## Tech Stack
 
@@ -10,9 +10,9 @@ An AI-powered tool that investigates Azure cloud costs automatically. It scans r
 | Backend | Python (FastAPI) |
 | Auth | Custom JWT Auth (bcrypt + PyJWT) |
 | Cloud Data | Azure CLI |
-| Cloud | Azure |
+| Cloud | AWS |
 | AI Analysis | OpenAI API |
-| Database | Azure Managed PostgreSQL |
+| Database | AWS Managed PostgreSQL |
 | Live Updates | FastAPI WebSocket |
 
 ## Architecture
@@ -40,7 +40,7 @@ An AI-powered tool that investigates Azure cloud costs automatically. It scans r
                 :                      :                  :
                 ▼                      ▼                  ▼
          ┌─────────────┐     ┌──────────────┐    ┌──────────────┐
-         │  AZURE CLI  │     │   FASTAPI    │    │   OPENAI     │
+         │  AWS CLI  │     │   FASTAPI    │    │   OPENAI     │
          │             │     │  WEBSOCKET   │    │    API       │
          │ az resource │     │  (Progress)  │    │              │
          │ list --rg   │     └──────┬───────┘    │ Cost Analysis│
@@ -48,13 +48,13 @@ An AI-powered tool that investigates Azure cloud costs automatically. It scans r
                 :                   : Live updates      :
                 ▼                   ▼                   :
          ┌─────────────┐   ┌───────────────┐            :
-         │   AZURE     │   │    REACT      │            :
+         │   AWS     │   │    REACT      │            :
          │ (Resource   │   │  (Progress    │            :
          │   Group)    │   │   Tracker)    │            :
          └─────────────┘   └───────────────┘            :
                                                         ▼
                                                  ┌──────────────┐
-                                                 │    AZURE     │
+                                                 │    AWS    │
                                                  │  POSTGRESQL  │
                                                  │  (Managed)   │
                                                  │              │
@@ -99,7 +99,7 @@ An AI-powered tool that investigates Azure cloud costs automatically. It scans r
 
 ## Prerequisites
 
-- Azure CLI installed and logged in (`az login`)
+- AWS CLI installed and logged in (`az login`)
 - An active Azure subscription with at least one resource group
 - An Azure Managed PostgreSQL instance
 - An OpenAI API key
@@ -128,7 +128,7 @@ npm run dev
 ## How It Works
 
 1. User signs up / logs in via custom JWT auth (credentials stored in Azure PostgreSQL)
-2. Selects an Azure Resource Group to analyze
+2. Selects an AWS Resource Group to analyze
 3. Python backend fetches all resources using Azure CLI
 4. Live progress is streamed to the UI via FastAPI WebSocket
 5. Resource data is sent to OpenAI API for cost analysis
